@@ -2,6 +2,7 @@ import com.microsoft.playwright.*;
 import init.InitializePlaywright;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.nio.file.Paths;
@@ -24,13 +25,16 @@ public class FirstTest {
         loginPage = new LoginPage(page);
         storesPage = new StoresPage(page);
     }
+
     @Test
-    public void Launch_Stores(){
+    @Parameters({"email", "password"})
+    public void Launch_Stores(String email, String password){
             loginPage.navigate();
-            loginPage.login("michael@zulzi.com", "6060");
+            loginPage.login(email, password);
             storesPage.navigate();
-            storesText = String.valueOf(storesPage.getStoresHeader());
+            storesText = String.valueOf(storesPage.getStoresHeader().innerText());
             System.out.println(storesText);
+            assertEquals("The Header text did not match!", "Stores", storesText);
         }
     }
 

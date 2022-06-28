@@ -18,7 +18,9 @@ public class InitializePlaywright {
         if (browserName.equals("chrome")){
             browserType = playwrite.chromium();
         }
-
+        if (browserName.equals("msedge")){
+            browserType = playwrite.webkit();
+        }
         assert browserType != null;
         Browser browser = browserType.launch(new BrowserType.LaunchOptions().setHeadless(false).setSlowMo(50));
         return browser.newPage();
